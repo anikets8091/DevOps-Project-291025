@@ -51,7 +51,7 @@ resource "aws_iam_role_policy_attachment" "worker_attach" {
 }
 
 resource "aws_autoscaling_group" "worker_asg" {
-  name = "${local.name_prefix}-asg"
+  name = "${local.name_prefix}-asg-4"
   max_size = var.asg_max_size
   min_size = var.asg_min_size
   desired_capacity = var.asg_min_size
