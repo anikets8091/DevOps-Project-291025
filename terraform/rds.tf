@@ -1,5 +1,5 @@
 resource "aws_secretsmanager_secret" "db_secret" {
-  name = "${local.name_prefix}-db-secret"
+  name = "${local.name_prefix}-db-secret-4"
 }
 
 resource "aws_secretsmanager_secret_version" "db_secret_version" {
@@ -14,7 +14,7 @@ resource "aws_secretsmanager_secret_version" "db_secret_version" {
 
 # RDS Subnet Group
 resource "aws_db_subnet_group" "db_subnets" {
-  name = "${local.name_prefix}-db-subnet-group"
+  name = "${local.name_prefix}-db-subnet-group-4"
   subnet_ids = [for s in aws_subnet.private : s.id]
 }
 
