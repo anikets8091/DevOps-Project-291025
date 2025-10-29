@@ -25,7 +25,8 @@ data "aws_iam_policy_document" "lambda_assume" {
     effect="Allow"
     principals{
         type="Service"
-        identifiers=["lambda.amazonaws.com"]} 
+        identifiers=["lambda.amazonaws.com"]
+   } 
     actions=["sts:AssumeRole"] }
 }
 
