@@ -18,9 +18,16 @@ resource "aws_security_group" "alb_sg" {
   name = "${local.name_prefix}-alb-sg"
   vpc_id = aws_vpc.main.id
   ingress {
-    from_port = 80; to_port = 80; protocol = "tcp"; cidr_blocks = [var.allowed_ip_cidr]
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = [var.allowed_ip_cidr]
   }
-  egress { from_port = 0; to_port = 0; protocol = "-1"; cidr_blocks = ["0.0.0.0/0"] }
+  egress { 
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"] }
 }
 
 # ECS cluster
@@ -30,7 +37,13 @@ resource "aws_ecs_cluster" "cluster" {
 
 # Task role for app
 data "aws_iam_policy_document" "ecs_task_assume" {
-  statement { effect="Allow"; principals{type="Service"; identifiers=["ecs-tasks.amazonaws.com"]} actions=["sts:AssumeRole"] }
+  statement { 
+    effect="Allow"; 
+    principals{
+        type="Service"; 
+        identifiers=["ecs-tasks.amazonaws.com"]} 
+    actions=["sts:AssumeRole"] 
+    }
 }
 resource "aws_iam_role" "ecs_task_role" {
   name = "${local.name_prefix}-ecs-task-role"
@@ -71,14 +84,23 @@ resource "aws_lb_target_group" "app_tg" {
   protocol = "HTTP"
   vpc_id = aws_vpc.main.id
   target_type = "ip"
-  health_check { path = "/"; protocol = "HTTP"; healthy_threshold = 2; unhealthy_threshold = 2; matcher = "200-399" }
+  health_check { 
+    path = "/"
+    protocol = "HTTP"
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+    matcher = "200-399" 
+    }
 }
 
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
   port = 80
   protocol = "HTTP"
-  default_action { type = "forward"; target_group_arn = aws_lb_target_group.app_tg.arn }
+  default_action { 
+    type = "forward"
+    target_group_arn = aws_lb_target_group.app_tg.arn 
+    }
 }
 
 # ECS service (Fargate) attached to ALB
@@ -104,6 +126,16 @@ resource "aws_ecs_service" "app_service" {
 resource "aws_security_group" "ecs_sg" {
   name = "${local.name_prefix}-ecs-sg"
   vpc_id = aws_vpc.main.id
-  ingress { from_port = var.app_port; to_port = var.app_port; protocol = "tcp"; security_groups = [aws_security_group.alb_sg.id] }
-  egress { from_port = 0; to_port = 0; protocol = "-1"; cidr_blocks = ["0.0.0.0/0"] }
+  ingress { 
+    from_port = var.app_port
+    to_port = var.app_port
+    protocol = "tcp"
+    security_groups = [aws_security_group.alb_sg.id] 
+    }
+  egress { 
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"] 
+    }
 }

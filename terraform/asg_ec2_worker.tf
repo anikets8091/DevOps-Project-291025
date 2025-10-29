@@ -20,7 +20,8 @@ EOF
 data "aws_ami" "amzn2" {
   most_recent = true
   owners = ["amazon"]
-  filter { name = "name"; values = ["amzn2-ami-hvm-*-x86_64-gp2"] }
+  filter { name = "name"
+  values = ["amzn2-ami-hvm-*-x86_64-gp2"] }
 }
 
 resource "aws_iam_instance_profile" "worker_profile" {
@@ -29,7 +30,13 @@ resource "aws_iam_instance_profile" "worker_profile" {
 }
 
 data "aws_iam_policy_document" "worker_assume" {
-  statement { effect="Allow"; principals{type="Service"; identifiers=["ec2.amazonaws.com"]} actions=["sts:AssumeRole"] }
+  statement { 
+    effect="Allow"; 
+    principals{
+        type="Service"; 
+        identifiers=["ec2.amazonaws.com"]} 
+    actions=["sts:AssumeRole"] 
+    }
 }
 resource "aws_iam_role" "worker_role" {
   name = "${local.name_prefix}-worker-role"
@@ -50,5 +57,9 @@ resource "aws_autoscaling_group" "worker_asg" {
     id = aws_launch_template.worker_lt.id
     version = "$Latest"
   }
-  tag { key = "Name"; value = "${local.name_prefix}-asg"; propagate_at_launch = true }
+  tag { 
+    key = "Name"
+    value = "${local.name_prefix}-asg"
+    propagate_at_launch = true 
+    }
 }
