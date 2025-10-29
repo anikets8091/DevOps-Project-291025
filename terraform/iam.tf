@@ -1,9 +1,9 @@
 resource "aws_iam_role" "ecs_task_exec" {
   name = "${local.name_prefix}-ecs-exec"
-  assume_role_policy = data.aws_iam_policy_document.ecs_task_assume.json
+  assume_role_policy = data.aws_iam_policy_document.ecs_task_assume-4.json
 }
 
-data "aws_iam_policy_document" "ecs_task_assume" {
+data "aws_iam_policy_document" "ecs_task_assume-4" {
   statement {
     effect = "Allow"
     principals { 
