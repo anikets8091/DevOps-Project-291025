@@ -21,7 +21,7 @@ resource "aws_db_subnet_group" "db_subnets" {
 resource "aws_db_instance" "postgres" {
   identifier = "${local.name_prefix}-postgres"
   engine = "postgres"
-  engine_version = "15.3"
+  engine_version = "17.6"
   instance_class = "db.t3.micro"
   username = var.db_username
   password = var.db_password
