@@ -1,0 +1,14 @@
+variable "region" { default = "ap-south-1" }
+variable "project_prefix" { default = "prod-demo" }
+variable "vpc_cidr" { default = "10.0.0.0/16" }
+variable "public_subnet_cidrs" { default = ["10.0.1.0/24","10.0.2.0/24"] }
+variable "private_subnet_cidrs" { default = ["10.0.11.0/24","10.0.12.0/24"] }
+variable "availability_zones" { default = ["ap-south-1a","ap-south-1b"] }
+variable "db_username" { default = "dbadmin" }
+variable "db_password" { default = "Pass9859" } # put in terraform.tfvars or SecretsManager
+variable "allowed_ip_cidr" { default = "0.0.0.0/0" } # restrict in prod
+variable "docker_image_tag" { default = "latest" }
+variable "asg_instance_type" { default = "t3.micro" }
+variable "asg_min_size" { default = 1 }
+variable "asg_max_size" { default = 2 }
+variable "app_port" { default = 8080 }
