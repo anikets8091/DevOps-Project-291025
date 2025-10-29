@@ -68,7 +68,8 @@ resource "aws_ecs_task_definition" "app_task" {
       essential = true
       portMappings = [{ 
         containerPort = var.app_port
-        hostPort = var.app_port; protocol = "tcp"
+        hostPort = var.app_port
+        protocol = "tcp"
       }]
       logConfiguration = {
         logDriver = "awslogs"
