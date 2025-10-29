@@ -20,8 +20,9 @@ EOF
 data "aws_ami" "amzn2" {
   most_recent = true
   owners = ["amazon"]
-  filter { name = "name"
-  values = ["amzn2-ami-hvm-*-x86_64-gp2"] }
+  filter { 
+    name = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"] }
 }
 
 resource "aws_iam_instance_profile" "worker_profile" {
@@ -31,7 +32,7 @@ resource "aws_iam_instance_profile" "worker_profile" {
 
 data "aws_iam_policy_document" "worker_assume" {
   statement { 
-    effect="Allow"; 
+    effect="Allow" 
     principals{
         type="Service"; 
         identifiers=["ec2.amazonaws.com"]} 

@@ -27,7 +27,8 @@ resource "aws_security_group" "alb_sg" {
     from_port = 0
     to_port = 0
     protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"] }
+    cidr_blocks = ["0.0.0.0/0"]
+     }
 }
 
 # ECS cluster
@@ -38,7 +39,7 @@ resource "aws_ecs_cluster" "cluster" {
 # Task role for app
 data "aws_iam_policy_document" "ecs_task_assume" {
   statement { 
-    effect="Allow"; 
+    effect="Allow" 
     principals{
         type="Service"; 
         identifiers=["ecs-tasks.amazonaws.com"]} 

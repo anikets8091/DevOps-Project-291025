@@ -8,7 +8,8 @@ data "aws_iam_policy_document" "ecs_task_assume" {
     effect = "Allow"
     principals { 
         type = "Service"
-        identifiers = ["ecs-tasks.amazonaws.com"] }
+        identifiers = ["ecs-tasks.amazonaws.com"] 
+        }
     actions = ["sts:AssumeRole"]
   }
 }
