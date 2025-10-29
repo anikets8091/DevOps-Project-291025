@@ -27,7 +27,7 @@ data "aws_ami" "amzn2" {
 }
 
 resource "aws_iam_instance_profile" "worker_profile" {
-  name = "${local.name_prefix}-worker-profile"
+  name = "${local.name_prefix}-worker-profile-4"
   role = aws_iam_role.worker_role.name
 }
 
