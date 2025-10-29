@@ -1,1 +1,38 @@
 
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::342360442241:role/devops-proj-271025
+          aws-region: ap-south-1
+
+      - name: Login to ECR
+        env:
+          AWS_REGION: ap-south-1
+        run: |
+          aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin 342360442241.dkr.ecr.ap-south-1.amazonaws.com
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t 342360442241.dkr.ecr.ap-south-1.amazonaws.com/prod-demo-app:latest ./app
+          docker push 342360442241.dkr.ecr.ap-south-1.amazonaws.com/prod-demo-app:latest
+
+      - name: Force new ECS deployment
+        run: |
+          aws ecs update-service --cluster prod-demo-ecs-cluster --service prod-demo-service --force-new-deployment --region ap-south-1
