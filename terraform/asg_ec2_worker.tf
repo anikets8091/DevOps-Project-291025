@@ -42,7 +42,7 @@ data "aws_iam_policy_document" "worker_assume" {
     }
 }
 resource "aws_iam_role" "worker_role" {
-  name = "${local.name_prefix}-worker-role"
+  name = "${local.name_prefix}-worker-role-4"
   assume_role_policy = data.aws_iam_policy_document.worker_assume.json
 }
 resource "aws_iam_role_policy_attachment" "worker_attach" {
