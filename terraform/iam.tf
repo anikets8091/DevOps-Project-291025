@@ -27,7 +27,8 @@ data "aws_iam_policy_document" "lambda_assume" {
         type="Service"
         identifiers=["lambda.amazonaws.com"]
    } 
-    actions=["sts:AssumeRole"] }
+    actions=["sts:AssumeRole"] 
+}
 }
 
 resource "aws_iam_role" "lambda_role" {
