@@ -22,7 +22,8 @@ data "aws_ami" "amzn2" {
   owners = ["amazon"]
   filter { 
     name = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-gp2"] }
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"] 
+}
 }
 
 resource "aws_iam_instance_profile" "worker_profile" {
@@ -34,8 +35,9 @@ data "aws_iam_policy_document" "worker_assume" {
   statement { 
     effect="Allow" 
     principals{
-        type="Service"; 
-        identifiers=["ec2.amazonaws.com"]} 
+        type="Service" 
+        identifiers=["ec2.amazonaws.com"]
+    } 
     actions=["sts:AssumeRole"] 
     }
 }
